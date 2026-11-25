@@ -83,6 +83,8 @@ The app currently has the two age paths, ten lesson topics per path, ten quiz ch
 
 The first experiment lets learners test a simplified animal classifier. It starts with a narrow set of examples, shows how a model can rely on the wrong pattern, and lets learners add more varied examples before testing again. It is clearly labelled as a rule-based illustration, not a real trained model.
 
+The preview is published from the `feat/ai-explorers-first-build` branch through GitHub Actions. The public `main` branch remains separate until the work is reviewed and approved.
+
 The next content and product work should include:
 - More hands-on experiments where learners can change inputs and observe outcomes
 - More visual explanations and step-by-step diagrams
