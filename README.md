@@ -41,6 +41,7 @@ Learners can also try five hands-on activities:
 - **RAG Notes Explorer:** select useful notes and see how missing information can lead to an incomplete answer.
 - **Neural Network Playground:** adjust input signals and watch how a small network combines clues to produce an output.
 - **Training and Testing:** explore why models need separate training and test examples, and why test data must stay unseen.
+- **Can You Trust This Answer?:** compare confident AI claims with trusted facts and practise spotting statements that are unsupported or incorrect.
 
 These activities are simplified learning demonstrations. They do not send learner information to an AI service or use a live AI model. The neural network and training/testing activities use fixed example calculations and predictions; they do not train a model.
 ## Curriculum preview
