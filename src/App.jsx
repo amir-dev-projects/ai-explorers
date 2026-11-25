@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, BookOpen, Brain, Check, ChevronRight, Clock3, Lightbulb, LockKeyhole, Menu, Sparkles, Telescope, X } from "lucide-react";
+import "./verification.css";
 
 const shared = [
   { id:"everyday", title:"AI is all around us", tag:"START HERE", time:"4 min", icon:"🌍", color:"blue" },
@@ -91,6 +92,8 @@ function App() {
   const [trainingPhase, setTrainingPhase] = useState("learn");
   const [showTestAnswers, setShowTestAnswers] = useState(false);
   const [includeTestData, setIncludeTestData] = useState(false);
+  const [trustChoices, setTrustChoices] = useState({ fish: null, gills: null, sound: null });
+  const [trustChecked, setTrustChecked] = useState(false);
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -258,6 +261,40 @@ function App() {
           {includeTestData&&<p className="leakage-warning">{age==="5–9"?"If the computer sees the answers before the test, the test is no longer fair. It is like seeing the answers before a quiz.":"This creates data leakage. The evaluation is no longer independent, so the score cannot reliably show how the model handles genuinely unseen data."}</p>}
         </div>
         <p className="lab-note"><Lightbulb size={14}/> This is a fixed teaching simulation, not a trained machine-learning model. The predictions are pre-set to explain the evaluation process. No information is sent to an AI service.</p>
+      </div>
+    </section>
+
+
+    <section className="verification-workshop" id="verification-workshop">
+      <div className="section-heading"><div><span className="section-kicker">HANDS-ON EXPERIMENT · 06</span><h2>Can you trust this answer?</h2><p>{age === "5–9" ? "An AI helper sounds sure about dolphins. Can you use the facts to check what it says?" : "Evaluate a confident AI-generated answer against a small set of trusted reference facts. Separate supported claims from claims the evidence contradicts."}</p></div><div className="lab-icon">🕵️</div></div>
+      <div className="verification-card">
+        <div className="verification-intro"><strong>{age === "5–9" ? "The AI helper says:" : "A generated answer makes three factual claims:"}</strong><p>“Dolphins are fish. They breathe underwater using gills. They use sound to find objects.”</p><small>{age === "5–9" ? "It sounds confident. But is every part correct?" : "Confidence and fluent wording are not evidence. Check each statement against the source notes below."}</small></div>
+        <div className="verification-evidence">
+          <div className="verification-step"><span>YOUR SOURCES</span><strong>{age === "5–9" ? "Read these trusted facts" : "Reference notes available for verification"}</strong></div>
+          <div className="evidence-grid">
+            <div className="evidence-note"><span>🐬</span><div><strong>{age === "5–9" ? "Dolphins are mammals" : "Classification"}</strong><p>{age === "5–9" ? "Dolphins are mammals, not fish." : "Dolphins are mammals. They are not fish."}</p></div></div>
+            <div className="evidence-note"><span>🌊</span><div><strong>{age === "5–9" ? "They breathe air" : "Breathing"}</strong><p>{age === "5–9" ? "They come to the surface and breathe air through a blowhole." : "Dolphins breathe air through a blowhole and must surface to breathe."}</p></div></div>
+            <div className="evidence-note"><span>🔊</span><div><strong>{age === "5–9" ? "They use sound" : "Echolocation"}</strong><p>{age === "5–9" ? "They make sounds and listen for echoes to find things." : "Dolphins use echolocation: emitted sounds bounce off objects and return as echoes."}</p></div></div>
+          </div>
+        </div>
+        <div className="verification-step"><span>YOUR TURN</span><strong>{age === "5–9" ? "Does the evidence support each claim?" : "Classify each claim using only the evidence provided."}</strong></div>
+        <div className="claim-list">
+          {[
+            {id:"fish",text:"Dolphins are fish.",reasonYoung:"The notes say dolphins are mammals, not fish. This claim is contradicted.",reasonTeen:"Contradicted. The reference explicitly classifies dolphins as mammals, not fish."},
+            {id:"gills",text:"Dolphins breathe underwater using gills.",reasonYoung:"The notes say dolphins breathe air through a blowhole at the surface. This claim is contradicted.",reasonTeen:"Contradicted. The source says dolphins breathe air through a blowhole and surface to breathe."},
+            {id:"sound",text:"Dolphins use sound to find objects.",reasonYoung:"The notes explain that dolphins use sounds and echoes. This claim is supported.",reasonTeen:"Supported. The reference describes echolocation: sound echoes help dolphins detect objects."}
+          ].map((claim,index)=><div className="claim-item" key={claim.id}>
+            <div className="claim-heading"><span>CLAIM 0{index+1}</span><strong>{claim.text}</strong></div>
+            <div className="claim-options">
+              <button className={trustChoices[claim.id]===true?"chosen":""} aria-pressed={trustChoices[claim.id]===true} onClick={()=>{setTrustChoices(old=>({...old,[claim.id]:true}));setTrustChecked(false);}}>{age==="5–9"?"Yes, the notes support it":"Supported by evidence"}</button>
+              <button className={trustChoices[claim.id]===false?"chosen":""} aria-pressed={trustChoices[claim.id]===false} onClick={()=>{setTrustChoices(old=>({...old,[claim.id]:false}));setTrustChecked(false);}}>{age==="5–9"?"No, the notes do not support it":"Not supported by evidence"}</button>
+            </div>
+            {trustChecked&&<p className={"claim-feedback "+(trustChoices[claim.id]===(claim.id==="sound")?"right":"review")}>{claim.id==="sound"?"✓ ":"✕ "}{age==="5–9"?claim.reasonYoung:claim.reasonTeen}</p>}
+          </div>)}
+        </div>
+        <div className="verification-actions"><button className="lab-action" disabled={Object.values(trustChoices).some(value=>value===null)} onClick={()=>setTrustChecked(true)}>Check my answers <ArrowRight size={16}/></button><button className="rag-reset" onClick={()=>{setTrustChoices({fish:null,gills:null,sound:null});setTrustChecked(false);}}>Try again</button></div>
+        {trustChecked&&<div className="verification-result" aria-live="polite"><span>YOUR RESULT</span><strong>{Object.entries({fish:false,gills:false,sound:true}).filter(([key,value])=>trustChoices[key]===value).length} out of 3 correct</strong><p>{age==="5–9"?"You checked the AI's words against the facts. That is a smart way to use AI. Even when an answer sounds sure, stop and check it.":"You evaluated each statement against the supplied evidence. The first two claims are contradicted; the third is supported. In real use, also check the quality, date and reliability of the sources."}</p></div>}
+        <p className="lab-note"><Lightbulb size={14}/> {age==="5–9"?"AI can make mistakes. Ask a trusted adult or check a good book when something matters.":"This is a fixed verification exercise, not a live AI response. Real fact-checking may require multiple independent, current and authoritative sources. No information is sent to an AI service."}</p>
       </div>
     </section>
 
