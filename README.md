@@ -1,6 +1,6 @@
 # AI Explorers
 
-AI Explorers is a learning platform that helps young people understand artificial intelligence through short lessons, practical examples and activities.
+AI Explorers is a learning platform that helps young people understand artificial intelligence through short lessons, practical examples and interactive challenges.
 
 ## Who it is for
 
@@ -20,7 +20,7 @@ The goal is not only to explain AI, but to help learners recognize it in everyda
 - How does it know what to do?
 - Can it make mistakes?
 
-## First learning topics
+## Topics
 
 - AI in everyday life
 - Machine learning and training data
@@ -32,7 +32,11 @@ The goal is not only to explain AI, but to help learners recognize it in everyda
 - AI assistants and agents
 - Reasoning, limitations and safety
 
-Each lesson includes an explanation, an example and a question to think about. The age selector changes the content to match the learner.
+Each lesson includes an explanation, an example, a reflection question and a short multiple-choice challenge.
+
+## Progress
+
+Lesson completion is saved locally in the learner's browser. The app does not ask learners to create an account or provide personal details.
 
 ## Run locally
 
