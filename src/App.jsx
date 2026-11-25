@@ -88,6 +88,9 @@ function App() {
   const [ragSources, setRagSources] = useState([]);
   const [ragChecked, setRagChecked] = useState(false);
   const [networkInputs, setNetworkInputs] = useState({ wheels: 0.9, wings: 0.1, feathers: 0.1 });
+  const [trainingPhase, setTrainingPhase] = useState("learn");
+  const [showTestAnswers, setShowTestAnswers] = useState(false);
+  const [includeTestData, setIncludeTestData] = useState(false);
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -224,6 +227,37 @@ function App() {
         <div className="network-takeaway" aria-live="polite"><span>THE NETWORK'S STRONGEST OUTPUT</span><strong>{(()=>{const w=networkInputs.wheels, g=networkInputs.wings, f=networkInputs.feathers;const h1=w*.8+g*.1+f*.05,h2=g*.65+f*.3+w*.05,h3=f*.65+g*.2+w*.15;const scores=[["🚗 Car",h1*.75+h2*.05+h3*.2],["✈️ Plane",h1*.1+h2*.8+h3*.1],["🐦 Bird",h1*.05+h2*.45+h3*.5]].sort((a,b)=>b[1]-a[1]);return scores[0][0];})()}</strong><p>{age === "5–9" ? "The network combines all the clues. Change a clue and see how its guess changes." : "The highest score is the strongest match among these three choices. It is not a confidence guarantee or proof that the input was understood correctly."}</p></div>
         <div className="network-actions"><button className="rag-reset" onClick={()=>setNetworkInputs({wheels:0.9,wings:0.1,feathers:0.1})}>Try a car</button><button className="rag-reset" onClick={()=>setNetworkInputs({wheels:0.2,wings:1,feathers:0.1})}>Try a plane</button><button className="rag-reset" onClick={()=>setNetworkInputs({wheels:0,wings:0.8,feathers:1})}>Try a bird</button></div>
         <p className="lab-note"><Lightbulb size={14}/> This is a fixed, simplified mathematical demonstration. A real neural network has many more connections and learns its weights during training. This activity does not use a live AI model or send information anywhere.</p>
+      </div>
+    </section>
+
+    <section className="training-workshop" id="training-workshop">
+      <div className="section-heading"><div><span className="section-kicker">HANDS-ON EXPERIMENT · 05</span><h2>Train it, then test it</h2><p>{age === "5–9" ? "A computer learns from some examples. Then we check if it can get new ones right." : "Explore the difference between training data and held-out test data, and why evaluation must use examples the model did not learn from."}</p></div><div className="lab-icon">🧑‍🏫</div></div>
+      <div className="training-card">
+        <div className="training-intro"><strong>{age === "5–9" ? "Let's teach a tiny fruit sorter." : "A small example of model evaluation."}</strong><p>{age === "5–9" ? "First, show it examples. Later, give it new pictures it has not seen." : "A model is fitted using one dataset, then evaluated on separate examples to see whether it can generalize beyond its training data."}</p></div>
+        <div className="training-tabs" role="tablist" aria-label="Training and testing steps">
+          <button role="tab" aria-selected={trainingPhase==="learn"} className={trainingPhase==="learn"?"active":""} onClick={()=>{setTrainingPhase("learn");setShowTestAnswers(false);}}>1. Training examples</button>
+          <button role="tab" aria-selected={trainingPhase==="test"} className={trainingPhase==="test"?"active":""} onClick={()=>{setTrainingPhase("test");setShowTestAnswers(false);}}>2. Test the model</button>
+        </div>
+        {trainingPhase==="learn" ? <div className="training-phase">
+          <div className="training-phase-heading"><span>TRAINING SET</span><strong>{age==="5–9"?"These are the examples the computer can learn from.":"These labelled examples are used to fit the toy classifier."}</strong></div>
+          <div className="fruit-examples">
+            {[["🍎","Red apple","APPLE"],["🍏","Green apple","APPLE"],["🍌","Yellow banana","BANANA"],["🍐","Green pear","PEAR"]].map(([emoji,label,kind])=><div className="fruit-example" key={label}><span>{emoji}</span><strong>{label}</strong><small>{kind}</small></div>)}
+          </div>
+          <div className="training-message"><span>🧠</span><p>{age==="5–9"?"The computer studies these examples and looks for clues that go with each fruit.":"The training set gives the model labelled examples. It can use patterns in the examples to make predictions."}</p></div>
+          <button className="lab-action" onClick={()=>{setTrainingPhase("test");setShowTestAnswers(false);}}>Ready to test <ArrowRight size={16}/></button>
+        </div> : <div className="training-phase">
+          <div className="training-phase-heading"><span>HELD-OUT TEST SET</span><strong>{age==="5–9"?"These are new pictures. The computer did not learn from them.":"These examples were kept separate from training and are used to evaluate predictions."}</strong></div>
+          <div className="test-fruits">
+            {[{emoji:"🍎",label:"Green apple",answer:"APPLE",prediction:"APPLE",correct:true},{emoji:"🍐",label:"Yellow pear",answer:"PEAR",prediction:"BANANA",correct:false},{emoji:"🍌",label:"Green banana",answer:"BANANA",prediction:"PEAR",correct:false}].map((item,index)=><div className={"test-fruit "+(showTestAnswers?(item.correct?"test-correct":"test-wrong"):"")} key={item.label}><span>{item.emoji}</span><strong>{item.label}</strong>{showTestAnswers?<><small>EXPECTED: {item.answer}</small><b>{item.correct?"✓ Correct":"✕ Predicted "+item.prediction}</b></>:<small>NEW EXAMPLE · NOT USED IN TRAINING</small>}</div>)}
+          </div>
+          <div className="training-actions"><button className="lab-action" onClick={()=>setShowTestAnswers(true)} disabled={showTestAnswers}>Check the predictions <ArrowRight size={16}/></button><button className="rag-reset" onClick={()=>{setTrainingPhase("learn");setShowTestAnswers(false);}}>Back to training</button></div>
+          {showTestAnswers&&<div className="evaluation-result" aria-live="polite"><span>TEST RESULT</span><strong>1 out of 3 correct</strong><p>{age==="5–9"?"The computer got one new picture right and two wrong. That tells us it needs better examples and more practice.":"The toy classifier scored 1/3 on held-out examples. This is a small teaching example, not a meaningful benchmark. Test data gives an independent view of performance on unseen cases."}</p></div>}
+        </div>}
+        <div className="data-leakage">
+          <label><input type="checkbox" checked={includeTestData} onChange={e=>setIncludeTestData(e.target.checked)}/><span><strong>{age==="5–9"?"What if we let it see the test pictures first?":"What if test examples are included in training?"}</strong><small>{age==="5–9"?"Try this to see why we keep some examples secret until the test.":"Toggle this to explore data leakage: evaluating on examples already used for training can make results look better than they really are."}</small></span></label>
+          {includeTestData&&<p className="leakage-warning">{age==="5–9"?"If the computer sees the answers before the test, the test is no longer fair. It is like seeing the answers before a quiz.":"This creates data leakage. The evaluation is no longer independent, so the score cannot reliably show how the model handles genuinely unseen data."}</p>}
+        </div>
+        <p className="lab-note"><Lightbulb size={14}/> This is a fixed teaching simulation, not a trained machine-learning model. The predictions are pre-set to explain the evaluation process. No information is sent to an AI service.</p>
       </div>
     </section>
 
