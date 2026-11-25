@@ -187,3 +187,59 @@
 .app-shell.teen-reader .rag-source-copy small{font-size:12px;line-height:1.7}
 .app-shell.teen-reader .rag-answer p{font-size:15px;line-height:1.8}
 @media(max-width:700px){.rag-workshop{padding:0 5% 44px}.rag-card{padding:17px}.rag-sources{grid-template-columns:1fr}.rag-question{padding:14px}.app-shell.young-reader .rag-source-copy small{font-size:12px}.rag-actions{flex-wrap:wrap}}
+
+
+/* Interactive neural network playground */
+.network-workshop{max-width:1120px;margin:0 auto;padding:0 7% 58px}
+.network-card{background:#fff;border:1px solid #e2eaf2;border-radius:22px;padding:25px;box-shadow:0 12px 35px rgba(53,91,130,.06)}
+.network-intro{padding:16px 18px;background:#f3f9fd;border:1px solid #dcecf7;border-radius:14px;margin-bottom:18px}
+.network-intro strong{font:800 18px 'Baloo 2';color:#34536d}
+.network-intro p{font-size:13px;line-height:1.75;color:#718397;margin:5px 0 0}
+.network-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:23px}
+.network-input{display:grid;gap:10px;padding:13px 15px;border:1px solid #e1eaf1;border-radius:12px;background:#fbfcfd}
+.network-input-title{display:flex;align-items:center;gap:8px;color:#405a70}
+.network-input-title>span{font-size:21px}
+.network-input-title strong{font:800 13px 'Baloo 2'}
+.network-input-title b{margin-left:auto;font-size:11px;color:#397eaa}
+.network-input input{width:100%;accent-color:#438eb9;cursor:pointer}
+.network-flow{display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr);gap:9px;align-items:center;padding:18px 14px;background:#f8fbfd;border:1px solid #e5edf3;border-radius:15px}
+.network-layer{display:grid;gap:11px;min-width:0}
+.network-layer-title{font-size:9px;letter-spacing:.8px;font-weight:900;color:#7890a3;text-align:center}
+.network-node{position:relative;overflow:hidden;display:grid;gap:4px;min-height:66px;padding:10px 9px;border:1px solid #dce7ef;border-radius:11px;background:#fff;text-align:center}
+.network-node>span{font-size:10px;line-height:1.35;font-weight:800;color:#4e6579}
+.network-node>strong{font:800 14px 'Baloo 2';color:#347da7}
+.network-node>i{position:absolute;bottom:0;left:0;height:4px;width:calc(var(--activation)*100%);background:#65b9a0;transition:width .2s}
+.hidden-node{background:#f4f9fd;border-color:#d6e8f4}
+.output-node{background:#f2faf5;border-color:#d8eee0}
+.network-connectors{display:grid;gap:33px;justify-items:center;color:#8aafc6;font-size:22px;font-weight:900}
+.network-takeaway{margin-top:17px;padding:16px 18px;border:1px solid #dcece5;border-radius:13px;background:#f2faf5}
+.network-takeaway>span{font-size:9px;letter-spacing:.8px;color:#438967;font-weight:900}
+.network-takeaway>strong{display:block;font:800 22px 'Baloo 2';color:#3f7255;margin:5px 0}
+.network-takeaway p{font-size:13px;line-height:1.7;color:#496c58;margin:0}
+.network-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.network-actions .rag-reset{border:1px solid #dce6ef;border-radius:9px;background:#fff;padding:9px 12px}
+.app-shell.young-reader .network-intro strong{font-size:21px}
+.app-shell.young-reader .network-intro p{font-size:16px;line-height:1.8}
+.app-shell.young-reader .network-input-title strong{font-size:16px}
+.app-shell.young-reader .network-input-title b{font-size:14px}
+.app-shell.young-reader .network-node>span{font-size:13px}
+.app-shell.young-reader .network-node>strong{font-size:17px}
+.app-shell.young-reader .network-takeaway>strong{font-size:24px}
+.app-shell.young-reader .network-takeaway p{font-size:16px;line-height:1.8}
+.app-shell.teen-reader .network-intro p{font-size:14px;line-height:1.8}
+.app-shell.teen-reader .network-node>span{font-size:11px}
+.app-shell.teen-reader .network-takeaway p{font-size:14px;line-height:1.8}
+@media(max-width:700px){
+ .network-workshop{padding:0 5% 44px}
+ .network-card{padding:17px}
+ .network-inputs{grid-template-columns:1fr;gap:8px}
+ .network-input{padding:10px 12px;gap:7px}
+ .network-flow{grid-template-columns:1fr;gap:8px;padding:13px}
+ .network-layer{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .network-layer-title{grid-column:1/-1}
+ .network-node{min-height:64px;padding:8px 5px}
+ .network-node>span{font-size:9px}
+ .network-connectors{display:flex;justify-content:center;gap:20px;line-height:1}
+ .network-connectors span{transform:rotate(90deg)}
+ .network-takeaway p{font-size:12px}
+}
