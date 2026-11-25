@@ -79,10 +79,12 @@ Every lesson currently includes:
 
 ## Current scope and next work
 
-The app currently has the two age paths, ten lesson topics per path, ten quiz challenges per path, feedback, and a browser-local progress indicator.
+The app currently has the two age paths, ten lesson topics per path, ten quiz challenges per path, feedback, a browser-local progress indicator, and a first interactive training-data experiment.
+
+The first experiment lets learners test a simplified animal classifier. It starts with a narrow set of examples, shows how a model can rely on the wrong pattern, and lets learners add more varied examples before testing again. It is clearly labelled as a rule-based illustration, not a real trained model.
 
 The next content and product work should include:
-- Hands-on experiments where learners can change inputs and observe outcomes
+- More hands-on experiments where learners can change inputs and observe outcomes
 - More visual explanations and step-by-step diagrams
 - Additional practice questions and mixed review challenges
 - Accessibility and usability review with the intended age groups
