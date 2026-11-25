@@ -87,6 +87,7 @@ function App() {
   const [promptFormat, setPromptFormat] = useState("facts");
   const [ragSources, setRagSources] = useState([]);
   const [ragChecked, setRagChecked] = useState(false);
+  const [networkInputs, setNetworkInputs] = useState({ wheels: 0.9, wings: 0.1, feathers: 0.1 });
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -185,6 +186,44 @@ function App() {
           {ragSources.includes("pollen")&&ragSources.includes("seeds")?<><strong>Good evidence found! 🌼</strong><p>Bees move pollen from one flower to another. This can help plants make seeds.</p><small>The selected notes contain information that supports this answer.</small></>:ragSources.includes("pollen")?<><strong>We found part of the answer. 🐝</strong><p>The notes say pollen can move from one flower to another. We still need information about how this helps the plant.</p><small>Try finding another useful note before answering fully.</small></>:ragSources.includes("seeds")?<><strong>We found a useful clue. 🌱</strong><p>The notes say pollen helps some plants make seeds, but they do not explain how bees move the pollen.</p><small>Try finding the note about bees carrying pollen.</small></>:<><strong>We could not find the answer yet. 🔎</strong><p>These notes are about other topics. The helper does not have enough useful information to answer this question from the selected notes.</p><small>Try selecting the notes about bees and pollen.</small></>}
         </div>}
         <p className="lab-note"><Lightbulb size={14}/> {age==="5–9"?"You helped find information before answering. That is the main idea behind RAG.":"This is a simplified retrieval demonstration, not a live language model. Real RAG systems search collections of documents, then pass retrieved passages to a model. Poor retrieval can lead to incomplete answers."}</p>
+      </div>
+    </section>
+
+    <section className="network-workshop" id="network-workshop">
+      <div className="section-heading"><div><span className="section-kicker">HANDS-ON EXPERIMENT · 04</span><h2>Explore a tiny neural network</h2><p>{age === "5–9" ? "Change the clues and watch the network make a new guess. It is like passing clues through a team." : "Adjust input signals and follow how weighted connections combine them into hidden activations and output scores."}</p></div><div className="lab-icon">🕸️</div></div>
+      <div className="network-card">
+        <div className="network-intro"><strong>Can this network recognize a vehicle or an animal?</strong><p>{age === "5–9" ? "Move the sliders to show how much each clue is present. Zero means none. One means a lot." : "Each input is a signal between 0 and 1. The small network combines signals using fixed weights. These weights are for demonstration; the model is not training."}</p></div>
+        <div className="network-inputs">
+          {[
+            {key:"wheels",label:"Wheels",emoji:"🛞"},
+            {key:"wings",label:"Wings",emoji:"🪽"},
+            {key:"feathers",label:"Feathers",emoji:"🪶"}
+          ].map(item=><label className="network-input" key={item.key}><span className="network-input-title"><span>{item.emoji}</span><strong>{item.label}</strong><b>{Math.round(networkInputs[item.key]*100)}%</b></span><input aria-label={item.label+" signal"} type="range" min="0" max="1" step="0.1" value={networkInputs[item.key]} onChange={e=>setNetworkInputs(old=>({...old,[item.key]:Number(e.target.value)}))}/></label>)}
+        </div>
+        <div className="network-flow">
+          <div className="network-layer"><span className="network-layer-title">INPUTS</span>
+            {[["wheels","Wheels"],["wings","Wings"],["feathers","Feathers"]].map(([key,label])=><div className="network-node input-node" key={key}><span>{label}</span><strong>{Math.round(networkInputs[key]*100)}%</strong><i style={{"--activation":networkInputs[key]}} /></div>)}
+          </div>
+          <div className="network-connectors" aria-hidden="true"><span>→</span><span>→</span><span>→</span></div>
+          <div className="network-layer"><span className="network-layer-title">HIDDEN LAYER</span>
+            {[
+              {name:"Ground movement",value:networkInputs.wheels*.8+networkInputs.wings*.1+networkInputs.feathers*.05},
+              {name:"Flight clues",value:networkInputs.wings*.65+networkInputs.feathers*.3+networkInputs.wheels*.05},
+              {name:"Animal clues",value:networkInputs.feathers*.65+networkInputs.wings*.2+networkInputs.wheels*.15}
+            ].map(node=><div className="network-node hidden-node" key={node.name}><span>{node.name}</span><strong>{Math.round(node.value*100)}%</strong><i style={{"--activation":Math.min(1,node.value)}} /></div>)}
+          </div>
+          <div className="network-connectors" aria-hidden="true"><span>→</span><span>→</span><span>→</span></div>
+          <div className="network-layer"><span className="network-layer-title">OUTPUT</span>
+            {[
+              {name:"Car",emoji:"🚗",value:(networkInputs.wheels*.8+networkInputs.wings*.1+networkInputs.feathers*.05)*.75+(networkInputs.wings*.65+networkInputs.feathers*.3+networkInputs.wheels*.05)*.05+(networkInputs.feathers*.65+networkInputs.wings*.2+networkInputs.wheels*.15)*.2},
+              {name:"Plane",emoji:"✈️",value:(networkInputs.wheels*.8+networkInputs.wings*.1+networkInputs.feathers*.05)*.1+(networkInputs.wings*.65+networkInputs.feathers*.3+networkInputs.wheels*.05)*.8+(networkInputs.feathers*.65+networkInputs.wings*.2+networkInputs.wheels*.15)*.1},
+              {name:"Bird",emoji:"🐦",value:(networkInputs.wheels*.8+networkInputs.wings*.1+networkInputs.feathers*.05)*.05+(networkInputs.wings*.65+networkInputs.feathers*.3+networkInputs.wheels*.05)*.45+(networkInputs.feathers*.65+networkInputs.wings*.2+networkInputs.wheels*.15)*.5}
+            ].map(node=><div className="network-node output-node" key={node.name}><span>{node.emoji} {node.name}</span><strong>{Math.round(node.value*100)}%</strong><i style={{"--activation":Math.min(1,node.value)}} /></div>)}
+          </div>
+        </div>
+        <div className="network-takeaway" aria-live="polite"><span>THE NETWORK'S STRONGEST OUTPUT</span><strong>{(()=>{const w=networkInputs.wheels, g=networkInputs.wings, f=networkInputs.feathers;const h1=w*.8+g*.1+f*.05,h2=g*.65+f*.3+w*.05,h3=f*.65+g*.2+w*.15;const scores=[["🚗 Car",h1*.75+h2*.05+h3*.2],["✈️ Plane",h1*.1+h2*.8+h3*.1],["🐦 Bird",h1*.05+h2*.45+h3*.5]].sort((a,b)=>b[1]-a[1]);return scores[0][0];})()}</strong><p>{age === "5–9" ? "The network combines all the clues. Change a clue and see how its guess changes." : "The highest score is the strongest match among these three choices. It is not a confidence guarantee or proof that the input was understood correctly."}</p></div>
+        <div className="network-actions"><button className="rag-reset" onClick={()=>setNetworkInputs({wheels:0.9,wings:0.1,feathers:0.1})}>Try a car</button><button className="rag-reset" onClick={()=>setNetworkInputs({wheels:0.2,wings:1,feathers:0.1})}>Try a plane</button><button className="rag-reset" onClick={()=>setNetworkInputs({wheels:0,wings:0.8,feathers:1})}>Try a bird</button></div>
+        <p className="lab-note"><Lightbulb size={14}/> This is a fixed, simplified mathematical demonstration. A real neural network has many more connections and learns its weights during training. This activity does not use a live AI model or send information anywhere.</p>
       </div>
     </section>
 
