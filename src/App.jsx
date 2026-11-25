@@ -1,131 +1,77 @@
 import { useState } from "react";
-import {
-  ArrowRight, BookOpen, Brain, Check, ChevronRight, Clock3, Compass,
-  Lightbulb, LockKeyhole, Menu, Play, Sparkles, Star, Telescope, X
-} from "lucide-react";
+import { ArrowRight, BookOpen, Brain, Check, ChevronRight, Clock3, Lightbulb, LockKeyhole, Menu, Sparkles, Telescope, X } from "lucide-react";
 
-const topics = [
-  { id: "ai-around-us", title: "AI is all around us", tag: "START HERE", time: "4 min", icon: "🌍", color: "blue", description: "Find the clever technology hiding in everyday things.", detail: "AI can help a phone understand your voice, suggest a song, or help a camera recognize a face. It is not magic. It is technology made by people.", example: "When a music app suggests a song you might enjoy, AI may be helping choose what to play next.", question: "Is AI involved when a map suggests a faster route?", answer: "It can be! Some map apps use AI to study patterns and suggest routes. They also use other kinds of software and live information." },
-  { id: "learning", title: "How machines learn", tag: "BIG IDEA", time: "5 min", icon: "🧩", color: "purple", description: "Teach a computer by showing it lots of examples.", detail: "Machine learning is a way for computers to find patterns in examples. Instead of writing every single rule, people give a computer examples and a learning method.", example: "Show a learning system many pictures of cats and dogs. It can begin to notice patterns that help it tell them apart.", question: "If it sees only cats, can it learn what makes a dog different?", answer: "Not very well! It needs examples of dogs too. Good examples help a learning system learn the difference." },
-  { id: "training", title: "Training data detectives", tag: "LOOK CLOSER", time: "4 min", icon: "🔎", color: "orange", description: "Discover why examples matter and how they shape AI.", detail: "Training data is the collection of examples used to teach an AI system. The examples need to be useful, varied and carefully checked.", example: "If you teach a toy sorter using only red apples, it may struggle when it sees a green apple.", question: "Can unfair or missing examples cause mistakes?", answer: "Yes. If important examples are missing, the system may work well for some things but poorly for others." },
-  { id: "patterns", title: "Spot the pattern", tag: "TRY IT", time: "5 min", icon: "🧠", color: "green", description: "See how computers find groups and connections.", detail: "A pattern is something that repeats or connects. Some AI systems look for patterns in information, even when nobody tells them exactly what groups to make.", example: "A system might group music by similar sounds, or group pictures that have things in common.", question: "Does finding a pattern always mean understanding it?", answer: "No. A computer can find a pattern without understanding the world the way a person does." },
-  { id: "language", title: "How AI uses words", tag: "WORDS & IDEAS", time: "5 min", icon: "💬", color: "pink", description: "Meet language models and see how they work with words.", detail: "A large language model (LLM) is an AI system trained with lots of text. It learns patterns in language and can use them to create a response.", example: "When you ask a writing helper to suggest a story ending, a language model can create words that fit your request.", question: "Does an LLM know every answer is true?", answer: "No. It can make mistakes or invent details. Important answers should be checked." },
-  { id: "prompts", title: "Give AI a good clue", tag: "BE A GUIDE", time: "4 min", icon: "🗺️", color: "teal", description: "Learn how clear instructions can lead to better results.", detail: "A prompt is the instruction or question you give an AI system. Clear instructions help explain what you want. Extra useful information can give it better context.", example: "“Tell me about space” is broad. “Explain why the Moon changes shape, using three short sentences” gives clearer directions.", question: "Can a better prompt guarantee a perfect answer?", answer: "No. A clear prompt can help, but AI can still misunderstand or make mistakes." }
+const shared = [
+  { id:"everyday", title:"AI is all around us", tag:"START HERE", time:"4 min", icon:"🌍", color:"blue" },
+  { id:"learning", title:"How machines learn", tag:"BIG IDEA", time:"5 min", icon:"🧩", color:"purple" },
+  { id:"data", title:"Training data detectives", tag:"LOOK CLOSER", time:"5 min", icon:"🔎", color:"orange" },
+  { id:"patterns", title:"Finding patterns", tag:"TRY IT", time:"5 min", icon:"🧠", color:"green" },
+  { id:"networks", title:"Inside a neural network", tag:"HOW IT WORKS", time:"6 min", icon:"🕸️", color:"teal" },
+  { id:"language", title:"How AI works with words", tag:"LANGUAGE MODELS", time:"6 min", icon:"💬", color:"pink" },
+  { id:"prompts", title:"Prompts and context", tag:"BE A GUIDE", time:"5 min", icon:"🗺️", color:"blue" },
+  { id:"rag", title:"AI with extra information", tag:"RAG EXPLAINED", time:"6 min", icon:"📚", color:"orange" },
+  { id:"agents", title:"AI assistants and agents", tag:"TOOLS & ACTIONS", time:"6 min", icon:"🤖", color:"purple" },
+  { id:"limits", title:"Reasoning, mistakes and safety", tag:"THINK CRITICALLY", time:"6 min", icon:"🧭", color:"green" }
 ];
 
-const extraTopics = [
-  { title: "Neural networks", icon: "🕸️", description: "A computer system inspired by some ideas about how brains connect." },
-  { title: "AI assistants and agents", icon: "🤖", description: "Explore tools that can plan steps and help complete a task." },
-  { title: "AI with extra information", icon: "📚", description: "See how AI can use trusted notes or documents to answer a question." },
-  { title: "Reasoning and checking", icon: "🧭", description: "Learn why some AI systems work through problems and why checking still matters." }
-];
+const lessons = {
+  "5–9": [
+    ["AI can be part of a map, a music app or a voice helper. People build these tools to do useful jobs. AI is not magic; it is technology made by people.","A music app may notice the songs you enjoy and suggest another one you might like.","A map suggests a quicker route. Could AI be helping?","Sometimes. A map can use AI to find patterns, along with maps and other information."],
+    ["Machine learning is one way computers learn from examples. People choose the examples and the learning method, then test what the computer learned.","Show a computer many pictures of cats and dogs. It can learn patterns that help sort new pictures.","If it sees only cats, will it know what a dog looks like?","Probably not. It needs examples of both cats and dogs to learn the difference."],
+    ["Training data is the examples used to teach an AI system. The examples should be varied and checked so the system does not learn a narrow or unfair picture of the world.","If a plant app sees only pictures of green leaves, it may struggle with yellow or spotted leaves.","What could happen if important examples are missing?","The AI may work for some people or situations but make mistakes in others."],
+    ["A pattern is something that repeats or things that have in common. Some AI systems look for patterns in lots of information.","A system might group animal pictures by features such as fur, feathers or shape.","Does finding a pattern mean the computer understands animals like you do?","No. It can notice patterns without understanding animals the way a person does."],
+    ["A neural network is a computer model made of connected parts. The connections help it work with information and learn patterns. It is inspired by some ideas about brains, but it is not a real brain.","Imagine teams passing clues along a chain. Each team changes the clue a little before passing it on.","Is a neural network made of tiny human brains?","No. It is maths and computer code arranged in connected layers."],
+    ["A large language model, or LLM, is trained with lots of text. It learns patterns in how words fit together and can use those patterns to write a reply.","You ask for a silly story about a moon rabbit. A language model can put words together to make one.","Does an LLM always know whether its answer is true?","No. It can make things up or get facts wrong. People should check important answers."],
+    ["A prompt is what you ask an AI to do. Context is extra information that helps it understand what you mean.","“Tell me about space” is broad. “Explain the Moon to a seven-year-old in three sentences” gives clearer clues.","Which prompt gives the AI more helpful clues?","The second one. It explains the topic, the reader and the length."],
+    ["Sometimes an AI answer is better when it can look at useful information first. This is one idea behind retrieval-augmented generation, or RAG.","A class helper looks up your teacher's science notes before answering a question about planets.","Why might looking at the class notes help?","The notes give the AI information that is connected to your question. The answer still needs checking."],
+    ["An AI assistant responds to requests. An AI agent can also plan steps and use tools to work toward a goal, with rules and permission.","A helper might find three library books about space. Before borrowing anything, it should ask an adult or follow the library's rules.","Should an AI agent be allowed to do anything it wants?","No. People need to set limits, give permission and check important actions."],
+    ["AI can be helpful, but it can also make mistakes. It does not have feelings or know everything. Think carefully and ask a trusted adult when something feels wrong.","An AI gives you a strange fact about an animal. You check a book or ask your teacher before believing it.","What should you do with an answer that seems surprising?","Pause and check it with a trusted source or a trusted adult."]
+  ],
+  "10–15": [
+    ["AI is a broad term for computer systems that perform tasks such as recognizing patterns, generating content or making predictions. Some products use AI; others rely on ordinary software or a mix of both.","A music service may use a recommendation model to rank songs, while its play button is ordinary software.","A navigation app suggests a faster route. What evidence would help you decide whether AI is involved?","Look for how the route is selected. It may combine prediction models, optimization algorithms, traffic feeds and fixed rules; not every automated feature is AI."],
+    ["Machine learning is a branch of AI in which a model improves at a task by learning patterns from data rather than relying only on hand-written rules. Training and evaluation are separate steps.","A model learns to classify spam using labelled email examples, then is tested on emails it has not seen.","Why should we test with examples the model did not train on?","To check whether it learned patterns that generalize, rather than memorizing its training examples."],
+    ["Training data shapes what a model can learn. Data quality, coverage, labels, consent and representation all affect performance. Missing or skewed examples can create unreliable or unfair outcomes.","A face-recognition model trained mostly on one demographic may perform worse for groups underrepresented in its data.","What is one risk of a dataset that does not represent the people who will use the system?","Performance can vary across groups, creating unequal error rates and potentially harmful decisions."],
+    ["Supervised learning uses examples with labels. Unsupervised learning looks for structure in data without supplied labels. Other approaches, such as reinforcement learning, use feedback or rewards.","A labelled set of photos marked “cat” and “dog” supports supervised learning. Grouping customers by similar behaviour without labels is an unsupervised task.","Which approach needs labelled examples?","Supervised learning. The labels provide the target answers during training."],
+    ["A neural network is a model built from layers of connected mathematical operations. During training, it adjusts weights to reduce errors. Deep learning uses networks with many layers.","In an image model, early layers may respond to simple visual features while later layers combine them into more complex patterns.","What changes when a network learns?","Its parameters, often called weights and biases, are adjusted based on a training objective and optimization process."],
+    ["Large language models are neural networks trained to predict and generate sequences of tokens. They learn statistical patterns from large text collections, then can be adapted for different tasks.","A chatbot generates a response one token at a time, using the conversation so far as context.","Does fluent writing prove that an LLM has verified facts or human-like understanding?","No. Fluency is not the same as factual accuracy or human understanding. Outputs can be plausible and still be wrong."],
+    ["A prompt describes the task. Context supplies relevant details, constraints and source material. Clear instructions can improve results, but they cannot guarantee correctness.","Compare “summarize this” with “summarize the attached report for a project manager in five bullet points, separating facts from recommendations.”","What makes the second prompt more useful?","It defines the input, audience, format and expectations, reducing ambiguity."],
+    ["Retrieval-augmented generation (RAG) retrieves relevant information from a source and supplies it to a language model when generating an answer. It can ground responses in selected documents, but retrieval and generation can both fail.","A support assistant searches approved product documentation and uses matching passages to draft an answer.","What should you check when a RAG answer is incorrect?","Check whether the right documents were indexed and retrieved, whether the passages were relevant, and whether the model represented them accurately."],
+    ["An AI agent combines a model with tools, state and a loop for selecting and carrying out steps toward a goal. Permissions, observability and human approval matter when actions have consequences.","A travel-planning agent might search flights and compare options, but should request approval before purchasing a ticket.","How is an agent different from a chatbot that only replies?","An agent can take actions through tools and iterate toward a goal, rather than only generating a message."],
+    ["Reasoning-capable models may use additional computation or structured steps to tackle complex tasks. They can still fail, inherit data limitations or produce unsupported claims. Safety includes verification, privacy and human oversight.","An AI proposes a project plan. You check dates, assumptions, dependencies and source material before using it.","Why is independent verification still important?","A confident explanation is not proof. Check evidence, test critical outputs and keep people accountable for consequential decisions."]
+  ]
+};
 
 function App() {
   const [age, setAge] = useState("5–9");
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [quizChoice, setQuizChoice] = useState("");
-  const [quizChecked, setQuizChecked] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const topics = shared.map((topic, index) => ({ ...topic, description: lessons[age][index][0].split(".")[0] + ".", detail: lessons[age][index][0], example: lessons[age][index][1], question: lessons[age][index][2], answer: lessons[age][index][3] }));
   const selected = topics.find((topic) => topic.id === activeTopic);
+  const openTopic = (id) => { setActiveTopic(id); setShowAnswer(false); setMenuOpen(false); };
 
-  const openTopic = (id) => {
-    setActiveTopic(id);
-    setQuizChoice("");
-    setQuizChecked(false);
-    setMenuOpen(false);
-  };
+  return <main className="app-shell">
+    <header className="topbar">
+      <a className="brand" href="#" onClick={() => setActiveTopic(null)} aria-label="AI Explorers home"><span className="brand-mark"><Sparkles size={23} /></span><span><strong>AI Explorers</strong><small>Curious minds. Clever discoveries.</small></span></a>
+      <nav className={menuOpen ? "main-nav nav-open" : "main-nav"}><a href="#discover" onClick={() => setMenuOpen(false)}>Discover</a><a href="#topics" onClick={() => setMenuOpen(false)}>Explore topics</a><a href="#our-promise" onClick={() => setMenuOpen(false)}>Our promise</a></nav>
+      <div className="top-actions"><div className="age-picker" aria-label="Choose learning path"><button className={age === "5–9" ? "selected" : ""} aria-pressed={age === "5–9"} onClick={() => { setAge("5–9"); setActiveTopic(null); }}>Ages 5–9</button><button className={age === "10–15" ? "selected" : ""} aria-pressed={age === "10–15"} onClick={() => { setAge("10–15"); setActiveTopic(null); }}>Ages 10–15</button></div><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></div>
+    </header>
 
-  return (
-    <main className="app-shell">
-      <header className="topbar">
-        <a className="brand" href="#" onClick={() => setActiveTopic(null)} aria-label="AI Explorers home">
-          <span className="brand-mark"><Sparkles size={23} /></span>
-          <span><strong>AI Explorers</strong><small>Curious minds. Clever discoveries.</small></span>
-        </a>
-        <nav className={menuOpen ? "main-nav nav-open" : "main-nav"}>
-          <a href="#discover" onClick={() => setMenuOpen(false)}>Discover</a>
-          <a href="#topics" onClick={() => setMenuOpen(false)}>Explore topics</a>
-          <a href="#our-promise" onClick={() => setMenuOpen(false)}>Our promise</a>
-        </nav>
-        <div className="top-actions">
-          <div className="age-picker" aria-label="Choose age group">
-            <button className={age === "5–9" ? "selected" : ""} onClick={() => setAge("5–9")}>Ages 5–9</button>
-            <button className={age === "10–15" ? "selected" : ""} onClick={() => setAge("10–15")}>10–15 <span>Soon</span></button>
-          </div>
-          <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button>
-        </div>
-      </header>
+    <section className="hero" id="discover">
+      <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-dot" /> YOUR ADVENTURE STARTS HERE</div><h1>Discover the<br /><span>world of AI.</span></h1><p className="hero-lead">{age === "5–9" ? "Have you ever wondered how a computer can recognize a voice, suggest a song, or help make a picture?" : "How do AI systems learn patterns, generate language, use tools and make mistakes? Explore the ideas behind today's AI."}</p><p className="hero-sub">{age === "5–9" ? "Let's explore how artificial intelligence works — one small discovery at a time." : "Build a clear mental model of modern AI through practical examples, technical ideas and critical thinking."}</p><button className="primary-button" onClick={() => openTopic(topics[0].id)}>Start exploring <ArrowRight size={18} /></button><div className="hero-note"><Clock3 size={15} /> Short lessons · Practical examples · Made for curious minds</div></div>
+      <div className="hero-art" aria-label="Illustration of a friendly robot exploring ideas"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><span className="float-star star-one">✦</span><span className="float-star star-two">✧</span><span className="float-chip chip-one">THINK</span><span className="float-chip chip-two">EXPLORE</span><div className="planet planet-one" /><div className="planet planet-two" /><div className="robot"><div className="antenna"><i /></div><div className="robot-head"><div className="ear ear-left" /><div className="ear ear-right" /><div className="eyes"><i /><i /></div><div className="smile" /><div className="cheek cheek-left" /><div className="cheek cheek-right" /></div><div className="robot-body"><span className="robot-heart">✦</span><i className="arm arm-left" /><i className="arm arm-right" /></div></div><div className="art-caption"><Sparkles size={15} /> Your AI adventure buddy</div></div>
+    </section>
 
-      {age === "10–15" && <div className="coming-banner"><Sparkles size={16} /> The 10–15 learning path is coming soon. It will explore the same ideas in more depth, with bigger challenges and more real-world examples.</div>}
+    <section className="learning-promise" id="our-promise"><div className="promise-icon"><Lightbulb size={25} /></div><div><span className="section-kicker">A DIFFERENT WAY TO LEARN</span><h2>Don't just learn about AI. Learn to <em>recognize</em> it.</h2><p>As you explore, keep asking four important questions:</p></div><div className="question-grid">{["Is AI involved here?","What is the AI doing?","How does it know what to do?","Can it make mistakes?"].map((q,i)=><div className="question-pill" key={q}><b>0{i+1}</b>{q}</div>)}</div></section>
 
-      <section className="hero" id="discover">
-        <div className="hero-copy">
-          <div className="eyebrow"><span className="eyebrow-dot" /> YOUR ADVENTURE STARTS HERE</div>
-          <h1>Discover the<br /><span>world of AI.</span></h1>
-          <p className="hero-lead">Have you ever wondered how a computer can recognize a voice, suggest a song, or help make a picture?</p>
-          <p className="hero-sub">Let's explore how artificial intelligence works — one small discovery at a time.</p>
-          <button className="primary-button" onClick={() => openTopic(topics[0].id)}>Start exploring <ArrowRight size={18} /></button>
-          <div className="hero-note"><Clock3 size={15} /> Short lessons · Fun experiments · Made for curious kids</div>
-        </div>
-        <div className="hero-art" aria-label="Illustration of a friendly robot exploring ideas">
-          <div className="orbit orbit-one" /><div className="orbit orbit-two" />
-          <span className="float-star star-one">✦</span><span className="float-star star-two">✧</span>
-          <span className="float-chip chip-one">THINK</span><span className="float-chip chip-two">EXPLORE</span>
-          <div className="planet planet-one" /><div className="planet planet-two" />
-          <div className="robot">
-            <div className="antenna"><i /></div>
-            <div className="robot-head"><div className="ear ear-left" /><div className="ear ear-right" /><div className="eyes"><i /><i /></div><div className="smile" /><div className="cheek cheek-left" /><div className="cheek cheek-right" /></div>
-            <div className="robot-body"><span className="robot-heart">✦</span><i className="arm arm-left" /><i className="arm arm-right" /></div>
-          </div>
-          <div className="art-caption"><Sparkles size={15} /> Your AI adventure buddy</div>
-        </div>
-      </section>
+    <section className="topics-section" id="topics"><div className="section-heading"><div><span className="section-kicker">{age === "5–9" ? "YOUNG EXPLORERS" : "TEEN EXPLORERS"} · YOUR LEARNING PATH</span><h2>What shall we explore?</h2><p>{age === "5–9" ? "Big ideas, explained simply. Pick a lesson and follow your curiosity." : "The same core AI topics, with more technical depth and real-world applications."}</p></div><div className="lesson-count"><BookOpen size={17} /> {topics.length} lessons</div></div><div className="topic-grid">{topics.map((topic,i)=><button className="topic-card" key={topic.id} onClick={()=>openTopic(topic.id)}><div className={"topic-illustration "+topic.color}><span>{topic.icon}</span><small>{String(i+1).padStart(2,"0")}</small></div><div className="topic-meta"><span>{topic.tag}</span><span><Clock3 size={12}/> {topic.time}</span></div><h3>{topic.title}</h3><p>{topic.description}</p><div className="card-link">Explore lesson <ChevronRight size={16}/></div></button>)}</div></section>
 
-      <section className="learning-promise" id="our-promise">
-        <div className="promise-icon"><Lightbulb size={25} /></div>
-        <div><span className="section-kicker">A DIFFERENT WAY TO LEARN</span><h2>Don't just learn about AI. Learn to <em>recognize</em> it.</h2><p>As you explore, keep asking four important questions:</p></div>
-        <div className="question-grid">
-          {["Is AI involved here?", "What is the AI doing?", "How does it know what to do?", "Can it make mistakes?"].map((q, i) => <div className="question-pill" key={q}><b>0{i + 1}</b>{q}</div>)}
-        </div>
-      </section>
+    <section className="coming-topics"><div className="coming-heading"><div className="coming-icon"><Telescope size={23}/></div><div><span className="section-kicker">TWO PATHS · ONE CURRICULUM</span><h2>Learn at the right level</h2><p>Both age groups can explore every core topic. The explanations and challenges change with the learning path.</p></div></div><div className="extra-grid"><div className="extra-card"><span>🌱</span><div><h3>Ages 5–9</h3><p>Short explanations, familiar examples, guided discovery and simple reflection questions.</p></div></div><div className="extra-card"><span>🚀</span><div><h3>Ages 10–15</h3><p>Deeper concepts, technical vocabulary, practical use cases and critical evaluation.</p></div></div><div className="extra-card"><span>🧪</span><div><h3>Learn by trying</h3><p>Activities and experiments will help turn ideas into something learners can test.</p></div></div><div className="extra-card"><span>🔍</span><div><h3>Think critically</h3><p>Understand strengths, limitations, privacy, fairness and when to verify an answer.</p></div></div></div></section>
 
-      <section className="topics-section" id="topics">
-        <div className="section-heading"><div><span className="section-kicker">PICK YOUR NEXT DISCOVERY</span><h2>What shall we explore?</h2><p>Start anywhere. Every lesson is a little adventure.</p></div><div className="lesson-count"><BookOpen size={17} /> {topics.length} mini lessons</div></div>
-        <div className="topic-grid">
-          {topics.map((topic, i) => <button className="topic-card" key={topic.id} onClick={() => openTopic(topic.id)}>
-            <div className={"topic-illustration " + topic.color}><span>{topic.icon}</span><small>{String(i + 1).padStart(2, "0")}</small></div>
-            <div className="topic-meta"><span>{topic.tag}</span><span><Clock3 size={12} /> {topic.time}</span></div>
-            <h3>{topic.title}</h3><p>{topic.description}</p>
-            <div className="card-link">Explore lesson <ChevronRight size={16} /></div>
-          </button>)}
-        </div>
-      </section>
+    <section className="safety-strip"><div className="safety-icon"><LockKeyhole size={21}/></div><div><strong>A safe place to be curious</strong><p>No open chat with strangers. No need to share personal details. Just learning, exploring and asking good questions.</p></div><span className="safety-spark">✦</span></section>
+    <footer className="footer"><a className="footer-brand" href="#"><span className="brand-mark"><Sparkles size={18}/></span><strong>AI Explorers</strong></a><p>Made for curious minds and big questions.</p><div className="footer-credit">Created by <strong>AMIR FATEMI</strong><span>© 2026 AMIR FATEMI. All rights reserved.</span></div></footer>
 
-      <section className="coming-topics">
-        <div className="coming-heading"><div className="coming-icon"><Telescope size={23} /></div><div><span className="section-kicker">MORE TO DISCOVER</span><h2>Our universe keeps growing</h2><p>More AI ideas will join the adventure.</p></div></div>
-        <div className="extra-grid">{extraTopics.map((item) => <div className="extra-card" key={item.title}><span>{item.icon}</span><div><h3>{item.title}</h3><p>{item.description}</p></div><LockKeyhole size={15} className="lock-icon" /></div>)}</div>
-      </section>
-
-      <section className="safety-strip"><div className="safety-icon"><LockKeyhole size={21} /></div><div><strong>A safe place to be curious</strong><p>No open chat with strangers. No need to share personal details. Just learning, exploring and asking good questions.</p></div><span className="safety-spark">✦</span></section>
-
-      <footer className="footer"><a className="footer-brand" href="#"><span className="brand-mark"><Sparkles size={18} /></span><strong>AI Explorers</strong></a><p>Made for curious minds and big questions.</p><div className="footer-credit">Created by <strong>AMIR FATEMI</strong><span>© 2026 AMIR FATEMI. All rights reserved.</span></div></footer>
-
-      {selected && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveTopic(null); }}>
-        <section className="lesson-modal" role="dialog" aria-modal="true" aria-labelledby="lesson-title">
-          <button className="modal-close" onClick={() => setActiveTopic(null)} aria-label="Close lesson"><X size={20} /></button>
-          <div className={"modal-art " + selected.color}><span>{selected.icon}</span><small>{selected.tag}</small></div>
-          <div className="lesson-content"><div className="lesson-topline"><span><BookOpen size={14} /> MINI LESSON</span><span><Clock3 size={14} /> {selected.time}</span></div>
-            <h2 id="lesson-title">{selected.title}</h2><p className="lesson-intro">{selected.detail}</p>
-            <div className="example-box"><span>🌟 REAL-LIFE EXAMPLE</span><p>{selected.example}</p></div>
-            <div className="think-box"><span><Brain size={16} /> STOP AND THINK</span><h3>{selected.question}</h3>
-              <div className="answer-reveal"><strong>Think about it, then reveal a clue</strong><p>{selected.answer}</p></div>
-            </div>
-            <button className="lesson-done" onClick={() => setActiveTopic(null)}><Check size={17} /> Got it! Back to exploring</button>
-          </div>
-        </section>
-      </div>}
-    </main>
-  );
+    {selected && <div className="modal-backdrop" role="presentation" onMouseDown={e=>{if(e.target===e.currentTarget)setActiveTopic(null);}}><section className="lesson-modal" role="dialog" aria-modal="true" aria-labelledby="lesson-title"><button className="modal-close" onClick={()=>setActiveTopic(null)} aria-label="Close lesson"><X size={20}/></button><div className={"modal-art "+selected.color}><span>{selected.icon}</span><small>{selected.tag}</small></div><div className="lesson-content"><div className="lesson-topline"><span><BookOpen size={14}/> {age === "5–9" ? "YOUNG EXPLORERS" : "TEEN EXPLORERS"}</span><span><Clock3 size={14}/> {selected.time}</span></div><h2 id="lesson-title">{selected.title}</h2><p className="lesson-intro">{selected.detail}</p><div className="example-box"><span>🌟 REAL-LIFE EXAMPLE</span><p>{selected.example}</p></div><div className="think-box"><span><Brain size={16}/> STOP AND THINK</span><h3>{selected.question}</h3><button className="reveal-button" onClick={()=>setShowAnswer(!showAnswer)}>{showAnswer ? "Hide explanation" : "Show me a possible answer"}</button>{showAnswer && <div className="answer-reveal"><p>{selected.answer}</p></div>}</div><button className="lesson-done" onClick={()=>setActiveTopic(null)}><Check size={17}/> Got it! Back to exploring</button></div></section></div>}
+  </main>;
 }
-
 export default App;
