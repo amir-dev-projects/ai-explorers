@@ -72,10 +72,19 @@ function App() {
   const [age, setAge] = useState("5–9");
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);\n  const [quizChoice, setQuizChoice] = useState(null);\n  const [quizChecked, setQuizChecked] = useState(false);\n  const [completed, setCompleted] = useState(() => { try { return JSON.parse(localStorage.getItem("ai-explorers-progress") || "[]"); } catch { return []; } });\n  const currentActivity = activeTopic ? activities[age][shared.findIndex((topic) => topic.id === activeTopic)] : null;\n  useEffect(() => { try { localStorage.setItem("ai-explorers-progress", JSON.stringify(completed)); } catch { /* Progress remains available for this visit if storage is unavailable. */ } }, [completed]);\n  const progressKey = age + ":";\n  const completedCount = completed.filter((id) => id.startsWith(progressKey)).length;
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [quizChoice, setQuizChoice] = useState(null);
+  const [quizChecked, setQuizChecked] = useState(false);
+  const [completed, setCompleted] = useState(() => { try { return JSON.parse(localStorage.getItem("ai-explorers-progress") || "[]"); } catch { return []; } });
+  const currentActivity = activeTopic ? activities[age][shared.findIndex((topic) => topic.id === activeTopic)] : null;
+  useEffect(() => { try { localStorage.setItem("ai-explorers-progress", JSON.stringify(completed)); } catch { /* Progress remains available for this visit if storage is unavailable. */ } }, [completed]);
+  const progressKey = age + ":";
+  const completedCount = completed.filter((id) => id.startsWith(progressKey)).length;
   const topics = shared.map((topic, index) => ({ ...topic, description: lessons[age][index][0].split(".")[0] + ".", detail: lessons[age][index][0], example: lessons[age][index][1], question: lessons[age][index][2], answer: lessons[age][index][3] }));
   const selected = topics.find((topic) => topic.id === activeTopic);
-  const openTopic = (id) => { setActiveTopic(id); setShowAnswer(false); setQuizChoice(null); setQuizChecked(false); setMenuOpen(false); };\n  const checkActivity = () => setQuizChecked(true);\n  const completeLesson = () => { const key = progressKey + activeTopic; setCompleted((previous) => previous.includes(key) ? previous : [...previous, key]); setActiveTopic(null); };
+  const openTopic = (id) => { setActiveTopic(id); setShowAnswer(false); setQuizChoice(null); setQuizChecked(false); setMenuOpen(false); };
+  const checkActivity = () => setQuizChecked(true);
+  const completeLesson = () => { const key = progressKey + activeTopic; setCompleted((previous) => previous.includes(key) ? previous : [...previous, key]); setActiveTopic(null); };
 
   return <main className="app-shell">
     <header className="topbar">
