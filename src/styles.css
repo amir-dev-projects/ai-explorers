@@ -50,3 +50,37 @@
   .lab-result p{font-size:14px}
   .quiz-option{font-size:14px}
 }
+
+/* Early-reader layout: short, clear blocks and stronger contrast */
+.app-shell.young-reader .hero-lead{font-size:19px;line-height:1.75;color:#304b63}
+.app-shell.young-reader .hero-sub{font-size:16px;line-height:1.8;color:#526a80}
+.app-shell.young-reader .topic-card p{font-size:15px;line-height:1.75;color:#52677b;min-height:54px}
+.app-shell.young-reader .section-heading p,
+.app-shell.young-reader .coming-heading p{font-size:15px;line-height:1.75;color:#536b80}
+.app-shell.young-reader .question-pill{font-size:14px;color:#405b73}
+.app-shell.young-reader .lesson-intro{font-size:18px;line-height:1.8;color:#354e64}
+.app-shell.young-reader .lesson-intro p{margin:0 0 12px}
+.app-shell.young-reader .example-box p{font-size:17px;line-height:1.8;color:#40576c;margin:9px 0 0}
+.app-shell.young-reader .think-box h3{font-size:20px;line-height:1.55;color:#344e63}
+.app-shell.young-reader .answer-reveal p{font-size:16px;line-height:1.8;color:#5d513a;margin:8px 0 0}
+.app-shell.young-reader .activity-box h3{font-size:19px;line-height:1.55}
+.app-shell.young-reader .quiz-option{font-size:16px;line-height:1.55;padding:13px 14px;color:#405b50}
+.app-shell.young-reader .quiz-feedback{font-size:16px;line-height:1.75}
+.app-shell.young-reader .lab-explain{font-size:17px;line-height:1.8;color:#405a70}
+.app-shell.young-reader .lab-result p{font-size:16px;line-height:1.8;color:#405a70}
+.app-shell.young-reader .test-animal small{font-size:14px;color:#536b80}
+.app-shell.young-reader .lab-note{font-size:14px;line-height:1.75;color:#586f82}
+.app-shell.young-reader .extra-card p,
+.app-shell.young-reader .safety-strip p{font-size:14px;line-height:1.75;color:#536b60}
+.app-shell.young-reader .reveal-button{font-size:14px;padding:10px 13px}
+@media(max-width:700px){
+ .app-shell.young-reader .hero-lead{font-size:18px}
+ .app-shell.young-reader .hero-sub{font-size:15px}
+ .app-shell.young-reader .topic-card p{font-size:14px}
+ .app-shell.young-reader .lesson-content{padding:23px}
+ .app-shell.young-reader .lesson-intro{font-size:17px;line-height:1.8}
+ .app-shell.young-reader .example-box p{font-size:16px}
+ .app-shell.young-reader .think-box h3{font-size:18px}
+ .app-shell.young-reader .quiz-option{font-size:15px}
+ .app-shell.young-reader .lab-explain{font-size:16px}
+}
