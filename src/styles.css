@@ -109,3 +109,35 @@
  .app-shell.teen-reader .answer-reveal p{font-size:15px}
  .app-shell.teen-reader .quiz-option{font-size:14px}
 }
+
+
+/* Interactive prompt-building workshop */
+.prompt-workshop{max-width:1120px;margin:0 auto;padding:0 7% 58px}
+.prompt-card{background:#fff;border:1px solid #e2eaf2;border-radius:22px;padding:25px;box-shadow:0 12px 35px rgba(53,91,130,.06)}
+.prompt-step{display:flex;align-items:center;gap:11px;margin:5px 0 10px}
+.prompt-step>span{width:29px;height:29px;display:grid;place-items:center;border-radius:9px;background:#eaf5fc;color:#4285b5;font-size:10px;font-weight:900}
+.prompt-step div{display:grid;gap:2px}
+.prompt-step strong{font:800 15px 'Baloo 2';color:#34536d}
+.prompt-step small{font-size:11px;color:#8293a2}
+.prompt-options{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px 40px}
+.prompt-options button{border:1px solid #dce6ef;border-radius:9px;background:#fff;padding:9px 13px;color:#60778e;font:800 11px Nunito;cursor:pointer}
+.prompt-options button.active{background:#eaf5fc;border-color:#7db7da;color:#286b96;box-shadow:inset 0 0 0 1px #7db7da}
+.prompt-options button:focus-visible{outline:3px solid #9bc9e6;outline-offset:2px}
+.prompt-output{padding:17px 19px;border:1px solid #dcecf7;border-radius:14px;background:#f3f9fd}
+.prompt-output>span,.prompt-preview>span{font-size:9px;letter-spacing:.8px;color:#5687a8;font-weight:900}
+.prompt-output>p{font-size:15px;line-height:1.8;color:#36566e;margin:8px 0 14px}
+.prompt-preview{padding:13px 15px;border-radius:11px;background:#fff;border:1px solid #e4edf4}
+.prompt-preview>span{color:#8296a8}
+.prompt-preview strong{display:block;font:800 16px 'Baloo 2';color:#34536d;margin:5px 0}
+.prompt-preview p{font-size:12px;line-height:1.7;color:#6d8193;margin:0}
+.app-shell.young-reader .prompt-step strong{font-size:18px}
+.app-shell.young-reader .prompt-step small{font-size:14px}
+.app-shell.young-reader .prompt-options button{font-size:15px;padding:11px 15px}
+.app-shell.young-reader .prompt-output>p{font-size:17px;line-height:1.8}
+.app-shell.young-reader .prompt-preview strong{font-size:19px}
+.app-shell.young-reader .prompt-preview p{font-size:15px;line-height:1.8}
+.app-shell.teen-reader .prompt-step strong{font-size:17px}
+.app-shell.teen-reader .prompt-options button{font-size:14px}
+.app-shell.teen-reader .prompt-output>p{font-size:16px;line-height:1.8}
+.app-shell.teen-reader .prompt-preview p{font-size:14px;line-height:1.8}
+@media(max-width:700px){.prompt-workshop{padding:0 5% 44px}.prompt-card{padding:17px}.prompt-options{margin-left:0}.prompt-output{padding:14px}.prompt-output>p{font-size:14px}.app-shell.young-reader .prompt-output>p{font-size:16px}}
