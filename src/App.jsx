@@ -70,6 +70,8 @@ const activities = {
 
 function App() {
   const [age, setAge] = useState("5–9");
+  const [variedExamples, setVariedExamples] = useState(false);
+  const [experimentChoice, setExperimentChoice] = useState("black-cat");
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -101,6 +103,27 @@ function App() {
     <section className="learning-promise" id="our-promise"><div className="promise-icon"><Lightbulb size={25} /></div><div><span className="section-kicker">A DIFFERENT WAY TO LEARN</span><h2>Don't just learn about AI. Learn to <em>recognize</em> it.</h2><p>As you explore, keep asking four important questions:</p></div><div className="question-grid">{["Is AI involved here?","What is the AI doing?","How does it know what to do?","Can it make mistakes?"].map((q,i)=><div className="question-pill" key={q}><b>0{i+1}</b>{q}</div>)}</div></section>
 
     <section className="topics-section" id="topics"><div className="section-heading"><div><span className="section-kicker">{age === "5–9" ? "YOUNG EXPLORERS" : "TEEN EXPLORERS"} · YOUR LEARNING PATH</span><h2>What shall we explore?</h2><p>{age === "5–9" ? "Big ideas, explained simply. Pick a lesson and follow your curiosity." : "The same core AI topics, with more technical depth and real-world applications."}</p></div><div className="lesson-count"><BookOpen size={17} /> {topics.length} lessons</div></div><div className="progress-panel"><div className="progress-copy"><strong>Your progress</strong><span>{completedCount} of {topics.length} lessons completed</span></div><div className="progress-track"><span style={{width: ((completedCount / topics.length) * 100) + "%"}} /></div></div><div className="topic-grid">{topics.map((topic,i)=><button className="topic-card" key={topic.id} onClick={()=>openTopic(topic.id)}><div className={"topic-illustration "+topic.color}><span>{topic.icon}</span><small>{String(i+1).padStart(2,"0")}</small></div><div className="topic-meta"><span>{topic.tag}</span><span><Clock3 size={12}/> {topic.time}</span></div><h3>{topic.title}</h3><p>{topic.description}</p><div className="card-link">{completed.includes(progressKey + topic.id) ? "Completed" : "Explore lesson"} <ChevronRight size={16}/></div></button>)}</div></section>
+
+    <section className="pattern-lab" id="pattern-lab">
+      <div className="section-heading"><div><span className="section-kicker">HANDS-ON EXPERIMENT · 01</span><h2>Teach a tiny pattern finder</h2><p>{age === "5–9" ? "Can a computer learn that cats come in different colours? Let's try it together." : "Explore how limited training examples can create a biased classifier, then improve the dataset and test again."}</p></div><div className="lab-icon">🧪</div></div>
+      <div className="lab-card">
+        <div className="lab-step"><span>STEP 1</span><strong>Look at the training examples</strong></div>
+        <p className="lab-explain">{age === "5–9" ? "Imagine a computer is learning to spot cats. At first, it only sees orange cats and black dogs." : "Imagine a toy image classifier trained on a narrow dataset: orange cats and black dogs. It may accidentally associate colour with the animal label."}</p>
+        <div className="training-examples">
+          <div className="training-item"><span className="training-emoji">🐈</span><strong>Orange cat</strong><small>TRAINING EXAMPLE · CAT</small></div>
+          <div className="training-item"><span className="training-emoji">🐈</span><strong>Orange cat</strong><small>TRAINING EXAMPLE · CAT</small></div>
+          <div className="training-item"><span className="training-emoji">🐕‍🦺</span><strong>Black dog</strong><small>TRAINING EXAMPLE · DOG</small></div>
+          <div className="training-item"><span className="training-emoji">🐕‍🦺</span><strong>Black dog</strong><small>TRAINING EXAMPLE · DOG</small></div>
+          {variedExamples && <><div className="training-item extra-example"><span className="training-emoji">🐈‍⬛</span><strong>Black cat</strong><small>NEW VARIED EXAMPLE · CAT</small></div><div className="training-item extra-example"><span className="training-emoji">🐕</span><strong>Golden dog</strong><small>NEW VARIED EXAMPLE · DOG</small></div></>}
+        </div>
+        <div className="lab-step"><span>STEP 2</span><strong>Test a new picture</strong></div>
+        <div className="test-animal"><span>{experimentChoice === "black-cat" ? "🐈‍⬛" : "🐕"}</span><div><strong>{experimentChoice === "black-cat" ? "A black cat" : "A golden dog"}</strong><small>This picture was not in the original training set.</small></div></div>
+        <div className="test-controls"><button className={experimentChoice === "black-cat" ? "active" : ""} onClick={() => setExperimentChoice("black-cat")}>Try a black cat</button><button className={experimentChoice === "golden-dog" ? "active" : ""} onClick={() => setExperimentChoice("golden-dog")}>Try a golden dog</button></div>
+        <div className="lab-result"><span>WHAT MIGHT THE TOY MODEL GUESS?</span><strong>{variedExamples ? (experimentChoice === "black-cat" ? "🐈 Cat" : "🐕 Dog") : (experimentChoice === "black-cat" ? "🐕 Dog" : "🐈 Cat")}</strong><p>{variedExamples ? "With examples showing different colours for both animals, the model has better evidence for the animal pattern." : "Because the examples were too limited, this toy model learned the wrong colour shortcut. It guesses using colour instead of the animal."}</p></div>
+        <button className="lab-action" onClick={() => setVariedExamples(!variedExamples)}>{variedExamples ? "Reset the training examples" : "Add more varied examples"} <ArrowRight size={16}/></button>
+        <p className="lab-note"><Lightbulb size={14}/> {age === "5–9" ? "Real AI systems are more complex. This little activity shows why examples matter." : "This is a simplified, rule-based illustration—not a real machine-learning model. Real models learn more complex patterns from data."}</p>
+      </div>
+    </section>
 
     <section className="coming-topics"><div className="coming-heading"><div className="coming-icon"><Telescope size={23}/></div><div><span className="section-kicker">TWO PATHS · ONE CURRICULUM</span><h2>Learn at the right level</h2><p>Both age groups can explore every core topic. The explanations and challenges change with the learning path.</p></div></div><div className="extra-grid"><div className="extra-card"><span>🌱</span><div><h3>Ages 5–9</h3><p>Short explanations, familiar examples, guided discovery and simple reflection questions.</p></div></div><div className="extra-card"><span>🚀</span><div><h3>Ages 10–15</h3><p>Deeper concepts, technical vocabulary, practical use cases and critical evaluation.</p></div></div><div className="extra-card"><span>🧪</span><div><h3>Learn by trying</h3><p>Activities and experiments will help turn ideas into something learners can test.</p></div></div><div className="extra-card"><span>🔍</span><div><h3>Think critically</h3><p>Understand strengths, limitations, privacy, fairness and when to verify an answer.</p></div></div></div></section>
 
