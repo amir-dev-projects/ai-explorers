@@ -202,7 +202,7 @@ function App() {
         </div>
         <div className="network-flow">
           <div className="network-layer"><span className="network-layer-title">INPUTS</span>
-            {[["wheels","Wheels"],["wings","Wings"],["feathers","Feathers"]].map(([key,label])=><div className="network-node input-node" key={key}><span>{label}</span><strong>{Math.round(networkInputs[key]*100)}%</strong><i style={{"--activation":networkInputs[key]}} /></div>)}
+            {[["wheels","Wheels"],["wings","Wings"],["feathers","Feathers"]].map(([key,label])=><div className="network-node input-node" key={key}><span>{label}</span><strong>{Math.round(networkInputs[key]*100)}%</strong><i style={{width:(networkInputs[key]*100)+"%"}} /></div>)}
           </div>
           <div className="network-connectors" aria-hidden="true"><span>→</span><span>→</span><span>→</span></div>
           <div className="network-layer"><span className="network-layer-title">HIDDEN LAYER</span>
@@ -210,7 +210,7 @@ function App() {
               {name:"Ground movement",value:networkInputs.wheels*.8+networkInputs.wings*.1+networkInputs.feathers*.05},
               {name:"Flight clues",value:networkInputs.wings*.65+networkInputs.feathers*.3+networkInputs.wheels*.05},
               {name:"Animal clues",value:networkInputs.feathers*.65+networkInputs.wings*.2+networkInputs.wheels*.15}
-            ].map(node=><div className="network-node hidden-node" key={node.name}><span>{node.name}</span><strong>{Math.round(node.value*100)}%</strong><i style={{"--activation":Math.min(1,node.value)}} /></div>)}
+            ].map(node=><div className="network-node hidden-node" key={node.name}><span>{node.name}</span><strong>{Math.round(node.value*100)}%</strong><i style={{width:(Math.min(1,node.value)*100)+"%"}} /></div>)}
           </div>
           <div className="network-connectors" aria-hidden="true"><span>→</span><span>→</span><span>→</span></div>
           <div className="network-layer"><span className="network-layer-title">OUTPUT</span>
