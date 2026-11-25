@@ -34,7 +34,11 @@ The goal is not only to explain AI, but to help learners recognize it in everyda
 
 Each lesson includes an explanation, an example, a reflection question and a short multiple-choice challenge.
 
-## Curriculum preview\n\nSee [the curriculum preview](docs/curriculum-preview.md) for a readable outline and sample lesson from both age groups.\n\n## Progress
+## Curriculum preview
+
+See [the curriculum preview](docs/curriculum-preview.md) for a readable outline and sample lesson from both age groups.
+
+## Progress
 
 Lesson completion is saved locally in the learner's browser. The app does not ask learners to create an account or provide personal details.
 
