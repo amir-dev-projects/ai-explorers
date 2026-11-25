@@ -41,6 +41,33 @@ const lessons = {
   ]
 };
 
+const activities = {
+  "5–9": [
+    {question:"Which one might use AI?",options:["A paper notebook","A music app suggesting songs","A wooden spoon"],correct:1,feedback:"A music app can learn patterns in what you listen to and suggest songs."},
+    {question:"What helps a machine-learning system learn?",options:["Examples to learn from","A magic button","Only one guess"],correct:0,feedback:"Examples help the system find patterns. People still need to test what it learned."},
+    {question:"A plant app has only seen green leaves. What might happen?",options:["It knows every plant","It may struggle with yellow leaves","It becomes a real plant"],correct:1,feedback:"Missing examples can make an AI system less reliable in situations it has not seen."},
+    {question:"A computer groups pictures by similar shapes. What is it finding?",options:["A pattern","A secret feeling","A new colour"],correct:0,feedback:"A pattern is something repeated or shared across examples."},
+    {question:"What is a neural network made from?",options:["Tiny brains","Connected mathematical parts","Spider silk"],correct:1,feedback:"Neural networks are computer models made from connected mathematical operations."},
+    {question:"Can a language model make up an answer?",options:["Yes, sometimes","Never","Only on weekends"],correct:0,feedback:"Language models can produce answers that sound convincing but are incorrect."},
+    {question:"Which prompt gives clearer instructions?",options:["Tell me something","Explain volcanoes in two simple sentences","Do it"],correct:1,feedback:"The second prompt tells the AI what topic to explain and how long the answer should be."},
+    {question:"Why might an AI look at class notes before answering?",options:["To use useful information","To make the notes disappear","To avoid reading"],correct:0,feedback:"RAG systems retrieve relevant information and provide it to a language model to help ground its answer."},
+    {question:"What should an AI agent do before buying something?",options:["Buy it secretly","Ask for permission","Ignore all rules"],correct:1,feedback:"Actions with consequences need clear limits and human approval."},
+    {question:"An AI gives you a surprising fact. What should you do?",options:["Believe it right away","Check a trusted source","Share it without checking"],correct:1,feedback:"AI can make mistakes. Check important or surprising claims with trusted sources."}
+  ],
+  "10–15": [
+    {question:"A navigation app combines traffic feeds and a prediction model. What is the best conclusion?",options:["Every feature is AI","It may combine AI and non-AI software","It cannot use algorithms"],correct:1,feedback:"Real products often combine models, fixed rules, optimization and external data."},
+    {question:"Why keep test examples separate from training data?",options:["To measure generalization","To make training slower","To hide the labels"],correct:0,feedback:"Separate test data helps show whether a model works on examples it has not trained on."},
+    {question:"A model performs worse for a group missing from its training data. What is a likely issue?",options:["Dataset coverage and representation","The screen brightness","The file name"],correct:0,feedback:"Unrepresentative data can create uneven performance and different error rates across groups."},
+    {question:"Which learning approach uses labelled examples?",options:["Supervised learning","Unsupervised learning","Random guessing"],correct:0,feedback:"Supervised learning uses examples paired with target labels."},
+    {question:"What changes as a neural network trains?",options:["Its weights and parameters","The physical keyboard","The internet cable"],correct:0,feedback:"Training adjusts model parameters to reduce errors against a chosen objective."},
+    {question:"Does fluent LLM output prove factual accuracy?",options:["Yes, always","No, fluency is not verification","Only if it is long"],correct:1,feedback:"A language model can generate plausible text that is factually wrong or unsupported."},
+    {question:"What makes a prompt more useful?",options:["Clear task, audience and output constraints","More capital letters","Leaving out context"],correct:0,feedback:"Specific instructions reduce ambiguity and make the expected result easier to evaluate."},
+    {question:"Which step is part of a RAG pipeline?",options:["Retrieve relevant source passages","Delete every source document","Guarantee every answer is true"],correct:0,feedback:"RAG retrieves relevant information and passes it to the model. Retrieval and generation can both fail."},
+    {question:"What distinguishes an AI agent from a basic chatbot?",options:["It can use tools and take steps toward a goal","It always has feelings","It never needs permission"],correct:0,feedback:"Agents can select actions through tools and iterate toward a goal, so permissions and oversight matter."},
+    {question:"An AI proposes a project plan. What should you do before relying on it?",options:["Verify assumptions, dates and dependencies","Assume it is correct","Remove human review"],correct:0,feedback:"Check evidence and critical details. A confident answer is not proof."}
+  ]
+};
+
 function App() {
   const [age, setAge] = useState("5–9");
   const [activeTopic, setActiveTopic] = useState(null);
