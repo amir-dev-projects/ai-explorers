@@ -1,27 +1,38 @@
 # AI Explorers
 
-AI Explorers is an interactive learning platform that helps children understand artificial intelligence through short lessons, real-life examples and hands-on activities.
+AI Explorers is a learning platform that helps young people understand artificial intelligence through short lessons, practical examples and activities.
 
 ## Who it is for
 
-The first learning path is designed for children aged 5–9. A second path for ages 10–15 is shown as coming soon. It will cover the same ideas in more depth, with additional examples and challenges.
+The platform has two learning paths, developed in parallel:
+
+- **Ages 5–9:** simple explanations, familiar examples and guided discovery.
+- **Ages 10–15:** deeper explanations, technical concepts, practical applications and critical thinking.
+
+Both paths cover the same core AI topics. The content, examples and level of detail change to suit the learner.
 
 ## Learning approach
 
-The goal is not only to explain AI, but to help children recognize it in everyday life. Lessons encourage children to ask:
+The goal is not only to explain AI, but to help learners recognize it in everyday life. Lessons encourage four questions:
 
 - Is AI involved here?
 - What is the AI doing?
 - How does it know what to do?
 - Can it make mistakes?
 
-## Current first build
+## First learning topics
 
-- Responsive home page and topic cards
-- Six introductory AI lessons with plain-language explanations
-- Everyday examples and short reflection questions
-- Age-range selector with a coming-soon state for ages 10–15
-- Safety-first messaging and creator footer
+- AI in everyday life
+- Machine learning and training data
+- Finding patterns
+- Neural networks
+- Large language models
+- Prompts and context
+- Retrieval-augmented generation (RAG)
+- AI assistants and agents
+- Reasoning, limitations and safety
+
+Each lesson includes an explanation, an example and a question to think about. The age selector changes the content to match the learner.
 
 ## Run locally
 
@@ -30,7 +41,7 @@ npm install
 npm run dev
 ```
 
-To create a production build:
+Create a production build:
 
 ```bash
 npm run build
