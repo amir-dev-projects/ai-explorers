@@ -88,7 +88,7 @@ function App() {
   const checkActivity = () => setQuizChecked(true);
   const completeLesson = () => { const key = progressKey + activeTopic; setCompleted((previous) => previous.includes(key) ? previous : [...previous, key]); setActiveTopic(null); };
 
-  return <main className="app-shell">
+  return <main className={age === "5–9" ? "app-shell young-reader" : "app-shell"}>
     <header className="topbar">
       <a className="brand" href="#" onClick={() => setActiveTopic(null)} aria-label="AI Explorers home"><span className="brand-mark"><Sparkles size={23} /></span><span><strong>AI Explorers</strong><small>Curious minds. Clever discoveries.</small></span></a>
       <nav className={menuOpen ? "main-nav nav-open" : "main-nav"}><a href="#discover" onClick={() => setMenuOpen(false)}>Discover</a><a href="#topics" onClick={() => setMenuOpen(false)}>Explore topics</a><a href="#our-promise" onClick={() => setMenuOpen(false)}>Our promise</a></nav>
