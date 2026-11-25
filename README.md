@@ -32,7 +32,7 @@ The goal is not only to explain AI, but to help learners recognize it in everyda
 - AI assistants and agents
 - Reasoning, limitations and safety
 
-Each lesson includes an explanation, an example, a reflection question and a short multiple-choice challenge.\n\nLearners can also try three hands-on activities:\n\n- **Pattern Finder:** see how limited examples can lead to a wrong prediction, then improve the examples.\n- **Prompt Builder:** change the topic, audience and answer style to see how instructions shape a request.\n- **RAG Notes Explorer:** select useful notes and see how missing information can lead to an incomplete answer.\n\nThese activities are simplified learning demonstrations. They do not send learner information to an AI service or use a live AI model.
+Each lesson includes an explanation, an example, a reflection question and a short multiple-choice challenge.\n\nLearners can also try four hands-on activities:\n\n- **Pattern Finder:** see how limited examples can lead to a wrong prediction, then improve the examples.\n- **Prompt Builder:** change the topic, audience and answer style to see how instructions shape a request.\n- **RAG Notes Explorer:** select useful notes and see how missing information can lead to an incomplete answer.\n- **Neural Network Playground:** adjust input signals and watch how a small network combines clues to produce an output.\n\nThese activities are simplified learning demonstrations. They do not send learner information to an AI service or use a live AI model. The neural network playground uses fixed example weights; it does not train a model.
 
 ## Curriculum preview
 
