@@ -84,3 +84,28 @@
  .app-shell.young-reader .quiz-option{font-size:15px}
  .app-shell.young-reader .lab-explain{font-size:16px}
 }
+
+
+/* Teen-reader typography: detailed content with comfortable reading rhythm */
+.app-shell.teen-reader .lesson-intro{font-size:17px;line-height:1.8;color:#354e64}
+.app-shell.teen-reader .lesson-intro p,
+.app-shell.teen-reader .example-box p,
+.app-shell.teen-reader .answer-reveal p{margin:0 0 12px}
+.app-shell.teen-reader .example-box p{font-size:16px;line-height:1.8;color:#40576c}
+.app-shell.teen-reader .think-box h3{font-size:18px;line-height:1.6;color:#344e63}
+.app-shell.teen-reader .answer-reveal p{font-size:16px;line-height:1.8;color:#5d513a}
+.app-shell.teen-reader .activity-box h3{font-size:17px;line-height:1.6}
+.app-shell.teen-reader .quiz-option{font-size:15px;line-height:1.6;padding:12px 14px;color:#405b50}
+.app-shell.teen-reader .quiz-feedback{font-size:15px;line-height:1.75}
+.app-shell.teen-reader .topic-card p,
+.app-shell.teen-reader .section-heading p,
+.app-shell.teen-reader .coming-heading p{font-size:14px;line-height:1.7;color:#536b80}
+.app-shell.teen-reader .lab-explain{font-size:16px;line-height:1.8;color:#405a70}
+.app-shell.teen-reader .lab-result p{font-size:15px;line-height:1.8;color:#405a70}
+.app-shell.teen-reader .lab-note{font-size:13px;line-height:1.75;color:#586f82}
+@media(max-width:700px){
+ .app-shell.teen-reader .lesson-intro{font-size:16px;line-height:1.8}
+ .app-shell.teen-reader .example-box p,
+ .app-shell.teen-reader .answer-reveal p{font-size:15px}
+ .app-shell.teen-reader .quiz-option{font-size:14px}
+}
