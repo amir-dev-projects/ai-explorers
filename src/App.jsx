@@ -85,6 +85,8 @@ function App() {
   const [promptTopic, setPromptTopic] = useState("volcanoes");
   const [promptAudience, setPromptAudience] = useState("young");
   const [promptFormat, setPromptFormat] = useState("facts");
+  const [ragSources, setRagSources] = useState([]);
+  const [ragChecked, setRagChecked] = useState(false);
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -162,6 +164,27 @@ function App() {
           <div className="prompt-preview"><span>WHAT YOU ASKED FOR</span><strong>{promptFormat==="facts"?"A focused set of facts":promptFormat==="story"?"A story with a clear theme":"Questions that check understanding"}</strong><p>{promptAudience==="young"?"The language should be simple and easy to follow.":"The explanation can include more detail and subject vocabulary."} The topic stays the same, but the instructions change the kind of answer you are asking for.</p></div>
         </div>
         <p className="lab-note"><Lightbulb size={14}/> This is a prompt-building demonstration. It does not send information to an AI service. A clearer prompt can guide an answer, but it cannot guarantee that the answer is correct.</p>
+      </div>
+    </section>
+
+    <section className="rag-workshop" id="rag-workshop">
+      <div className="section-heading"><div><span className="section-kicker">HANDS-ON EXPERIMENT · 03</span><h2>Help an AI find the right notes</h2><p>{age === "5–9" ? "Can you help a computer answer a question by finding the best notes? Pick the useful ones and see what happens." : "Explore retrieval-augmented generation (RAG): select source passages, retrieve evidence and see how missing context affects an answer."}</p></div><div className="lab-icon">📚</div></div>
+      <div className="rag-card">
+        <div className="rag-question"><span>THE QUESTION</span><h3>How do bees help flowers and plants?</h3><p>Imagine an AI helper has been asked this question. It can look through these notes before answering.</p></div>
+        <div className="rag-step"><span>STEP 1</span><strong>Choose the notes that might help</strong><small>Select one or more notes. You are acting as the search step.</small></div>
+        <div className="rag-sources">
+          {[
+            {id:"pollen",emoji:"🐝",title:"Bees carry pollen",body:"When bees visit flowers, pollen can stick to their bodies and move to another flower."},
+            {id:"seeds",emoji:"🌱",title:"Pollen helps plants",body:"Moving pollen between flowers can help some plants make seeds."},
+            {id:"volcano",emoji:"🌋",title:"Volcanoes",body:"Volcanoes can release hot melted rock, ash and gases during an eruption."},
+            {id:"ocean",emoji:"🐙",title:"Deep ocean animals",body:"Octopuses live in the ocean and use their arms to explore and find food."}
+          ].map(note=><button key={note.id} className={"rag-source "+(ragSources.includes(note.id)?"chosen":"")} aria-pressed={ragSources.includes(note.id)} onClick={()=>{setRagSources(old=>old.includes(note.id)?old.filter(id=>id!==note.id):[...old,note.id]);setRagChecked(false);}}><span className="rag-source-icon">{note.emoji}</span><span className="rag-source-copy"><strong>{note.title}</strong><small>{note.body}</small></span><span className="rag-select">{ragSources.includes(note.id)?"✓":"＋"}</span></button>)}
+        </div>
+        <div className="rag-actions"><button className="lab-action" disabled={ragSources.length===0} onClick={()=>setRagChecked(true)}>Search these notes <ArrowRight size={16}/></button><button className="rag-reset" onClick={()=>{setRagSources([]);setRagChecked(false);}}>Start again</button></div>
+        {ragChecked && <div className="rag-answer" aria-live="polite"><span>STEP 2 · WHAT THE HELPER FOUND</span>
+          {ragSources.includes("pollen")&&ragSources.includes("seeds")?<><strong>Good evidence found! 🌼</strong><p>Bees move pollen from one flower to another. This can help plants make seeds.</p><small>The selected notes contain information that supports this answer.</small></>:ragSources.includes("pollen")?<><strong>We found part of the answer. 🐝</strong><p>The notes say pollen can move from one flower to another. We still need information about how this helps the plant.</p><small>Try finding another useful note before answering fully.</small></>:ragSources.includes("seeds")?<><strong>We found a useful clue. 🌱</strong><p>The notes say pollen helps some plants make seeds, but they do not explain how bees move the pollen.</p><small>Try finding the note about bees carrying pollen.</small></>:<><strong>We could not find the answer yet. 🔎</strong><p>These notes are about other topics. The helper does not have enough useful information to answer this question from the selected notes.</p><small>Try selecting the notes about bees and pollen.</small></>}
+        </div>}
+        <p className="lab-note"><Lightbulb size={14}/> {age==="5–9"?"You helped find information before answering. That is the main idea behind RAG.":"This is a simplified retrieval demonstration, not a live language model. Real RAG systems search collections of documents, then pass retrieved passages to a model. Poor retrieval can lead to incomplete answers."}</p>
       </div>
     </section>
 
