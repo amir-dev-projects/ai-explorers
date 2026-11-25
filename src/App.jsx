@@ -82,6 +82,9 @@ function App() {
   const [age, setAge] = useState("5–9");
   const [variedExamples, setVariedExamples] = useState(false);
   const [experimentChoice, setExperimentChoice] = useState("black-cat");
+  const [promptTopic, setPromptTopic] = useState("volcanoes");
+  const [promptAudience, setPromptAudience] = useState("young");
+  const [promptFormat, setPromptFormat] = useState("facts");
   const [activeTopic, setActiveTopic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -132,6 +135,33 @@ function App() {
         <div className="lab-result"><span>WHAT MIGHT THE TOY MODEL GUESS?</span><strong>{variedExamples ? (experimentChoice === "black-cat" ? "🐈 Cat" : "🐕 Dog") : (experimentChoice === "black-cat" ? "🐕 Dog" : "🐈 Cat")}</strong><p>{variedExamples ? "With examples showing different colours for both animals, the model has better evidence for the animal pattern." : "Because the examples were too limited, this toy model learned the wrong colour shortcut. It guesses using colour instead of the animal."}</p></div>
         <button className="lab-action" onClick={() => setVariedExamples(!variedExamples)}>{variedExamples ? "Reset the training examples" : "Add more varied examples"} <ArrowRight size={16}/></button>
         <p className="lab-note"><Lightbulb size={14}/> {age === "5–9" ? "Real AI systems are more complex. This little activity shows why examples matter." : "This is a simplified, rule-based illustration—not a real machine-learning model. Real models learn more complex patterns from data."}</p>
+      </div>
+    </section>
+
+    <section className="prompt-workshop" id="prompt-workshop">
+      <div className="section-heading"><div><span className="section-kicker">HANDS-ON EXPERIMENT · 02</span><h2>Build a better prompt</h2><p>{age === "5–9" ? "Choose what you want to learn, who it is for and how you want the answer. See how clear instructions help." : "Change the task, audience and output format to see how prompt details shape an LLM's response."}</p></div><div className="lab-icon">💬</div></div>
+      <div className="prompt-card">
+        <div className="prompt-step"><span>01</span><div><strong>Pick a topic</strong><small>What should the AI explain?</small></div></div>
+        <div className="prompt-options">
+          {[["volcanoes","Volcanoes"],["oceans","The deep ocean"],["space","Space"]].map(([value,label])=><button key={value} className={promptTopic===value?"active":""} aria-pressed={promptTopic===value} onClick={()=>setPromptTopic(value)}>{label}</button>)}
+        </div>
+        <div className="prompt-step"><span>02</span><div><strong>Choose your reader</strong><small>Who is the answer for?</small></div></div>
+        <div className="prompt-options">
+          <button className={promptAudience==="young"?"active":""} aria-pressed={promptAudience==="young"} onClick={()=>setPromptAudience("young")}>Ages 5–9</button>
+          <button className={promptAudience==="teen"?"active":""} aria-pressed={promptAudience==="teen"} onClick={()=>setPromptAudience("teen")}>Ages 10–15</button>
+        </div>
+        <div className="prompt-step"><span>03</span><div><strong>Choose the answer style</strong><small>What would make it useful?</small></div></div>
+        <div className="prompt-options">
+          <button className={promptFormat==="facts"?"active":""} aria-pressed={promptFormat==="facts"} onClick={()=>setPromptFormat("facts")}>Three facts</button>
+          <button className={promptFormat==="story"?"active":""} aria-pressed={promptFormat==="story"} onClick={()=>setPromptFormat("story")}>A short story</button>
+          <button className={promptFormat==="quiz"?"active":""} aria-pressed={promptFormat==="quiz"} onClick={()=>setPromptFormat("quiz")}>A mini quiz</button>
+        </div>
+        <div className="prompt-output">
+          <span>YOUR PROMPT</span>
+          <p>Explain {promptTopic==="volcanoes"?"volcanoes":promptTopic==="oceans"?"the deep ocean":"space"} for {promptAudience==="young"?"a child aged 5–9":"a young person aged 10–15"}. Use {promptAudience==="young"?"simple words and a familiar example":"clear explanations and one real-world example"} and create {promptFormat==="facts"?"three interesting facts":promptFormat==="story"?"a short imaginative story":"three quiz questions with answers"}.</p>
+          <div className="prompt-preview"><span>WHAT YOU ASKED FOR</span><strong>{promptFormat==="facts"?"A focused set of facts":promptFormat==="story"?"A story with a clear theme":"Questions that check understanding"}</strong><p>{promptAudience==="young"?"The language should be simple and easy to follow.":"The explanation can include more detail and subject vocabulary."} The topic stays the same, but the instructions change the kind of answer you are asking for.</p></div>
+        </div>
+        <p className="lab-note"><Lightbulb size={14}/> This is a prompt-building demonstration. It does not send information to an AI service. A clearer prompt can guide an answer, but it cannot guarantee that the answer is correct.</p>
       </div>
     </section>
 
