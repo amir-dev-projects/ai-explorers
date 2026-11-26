@@ -3,8 +3,8 @@ import { ArrowRight, BookOpen, Brain, Check, ChevronRight, Clock3, Lightbulb, Lo
 import "./verification.css";
 
 const shared = [
-  { id:"everyday", title:"AI is all around us", tag:"START HERE", time:"4 min", icon:"🌍", color:"blue" },
-  { id:"learning", title:"How machines learn", tag:"BIG IDEA", time:"5 min", icon:"🧩", color:"purple" },
+  { id:"everyday", title:"AI is all around us", tag:"START HERE", time:"6 min", icon:"🌍", color:"blue" },
+  { id:"learning", title:"How machines learn", tag:"BIG IDEA", time:"7 min", icon:"🧩", color:"purple" },
   { id:"data", title:"Training data detectives", tag:"LOOK CLOSER", time:"5 min", icon:"🔎", color:"orange" },
   { id:"patterns", title:"Finding patterns", tag:"TRY IT", time:"5 min", icon:"🧠", color:"green" },
   { id:"networks", title:"Inside a neural network", tag:"HOW IT WORKS", time:"6 min", icon:"🕸️", color:"teal" },
