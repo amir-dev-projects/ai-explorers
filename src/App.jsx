@@ -124,6 +124,16 @@ function App() {
 
     <section className="learning-promise" id="our-promise"><div className="promise-icon"><Lightbulb size={25} /></div><div><span className="section-kicker">A DIFFERENT WAY TO LEARN</span><h2>Don't just learn about AI. Learn to <em>recognize</em> it.</h2><p>As you explore, keep asking four important questions:</p></div><div className="question-grid">{["Is AI involved here?","What is the AI doing?","How does it know what to do?","Can it make mistakes?"].map((q,i)=><div className="question-pill" key={q}><b>0{i+1}</b>{q}</div>)}</div></section>
 
+    <section className="everyday-ai-section" id="everyday-ai">
+      <div className="everyday-ai-heading">
+        <span className="section-kicker">AI IS CLOSER THAN YOU THINK</span>
+        <h2>Where do we see AI every day?</h2>
+        <p>{age === "5–9" ? "AI isn't only in robots or science labs. Look at the places you visit and the devices you might already know." : "AI is built into familiar products and services. Explore what it can do in places you visit regularly."}</p>
+      </div>
+      <img className="everyday-ai-infographic" src={`${import.meta.env.BASE_URL}everyday-ai-places.svg`} alt="Illustrated examples of AI at home, in a car, at school, in a library and in a supermarket." />
+      <div className="everyday-ai-note"><strong>Remember:</strong> Not every smart device uses AI. People design these systems, and people should check important decisions.</div>
+    </section>
+
     <section className="topics-section" id="topics"><div className="section-heading"><div><span className="section-kicker">{age === "5–9" ? "YOUNG EXPLORERS" : "TEEN EXPLORERS"} · YOUR LEARNING PATH</span><h2>What shall we explore?</h2><p>{age === "5–9" ? "Big ideas, explained simply. Pick a lesson and follow your curiosity." : "The same core AI topics, with more technical depth and real-world applications."}</p></div><div className="lesson-count"><BookOpen size={17} /> {topics.length} lessons</div></div><div className="progress-panel"><div className="progress-copy"><strong>Your progress</strong><span>{completedCount} of {topics.length} lessons completed</span></div><div className="progress-track"><span style={{width: ((completedCount / topics.length) * 100) + "%"}} /></div></div><div className="topic-grid">{topics.map((topic,i)=><button className="topic-card" key={topic.id} onClick={()=>openTopic(topic.id)}><div className={"topic-illustration "+topic.color}><span>{topic.icon}</span><small>{String(i+1).padStart(2,"0")}</small></div><div className="topic-meta"><span>{topic.tag}</span><span><Clock3 size={12}/> {topic.time}</span></div><h3>{topic.title}</h3><p>{topic.description}</p><div className="card-link">{completed.includes(progressKey + topic.id) ? "Completed" : "Explore lesson"} <ChevronRight size={16}/></div></button>)}</div></section>
 
     <section className="pattern-lab" id="pattern-lab">
