@@ -336,3 +336,17 @@
  .app-shell.teen-reader .lesson-intro{font-size:14px;line-height:1.8}
  .app-shell.teen-reader .lesson-key-term p{font-size:12px}
 }
+
+
+/* Everyday AI places infographic */
+.everyday-ai-section{max-width:1180px;margin:0 auto;padding:62px 5.5% 70px}
+.everyday-ai-heading{text-align:center;max-width:760px;margin:0 auto 28px}
+.everyday-ai-heading h2{font-family:'Baloo 2',sans-serif;font-size:clamp(28px,4vw,40px);line-height:1.15;color:#173b63;margin:8px 0}
+.everyday-ai-heading p{font-size:15px;line-height:1.75;color:#58718a;margin:0}
+.everyday-ai-infographic{display:block;width:100%;height:auto;border-radius:22px;box-shadow:0 14px 38px rgba(33,91,135,.12)}
+.everyday-ai-note{max-width:900px;margin:20px auto 0;padding:14px 18px;border-radius:14px;background:#f0f7fc;color:#49647b;font-size:13px;line-height:1.7;text-align:center}
+.everyday-ai-note strong{color:#1e6595}
+.app-shell.young-reader .everyday-ai-heading p{font-size:17px;line-height:1.8}
+.app-shell.young-reader .everyday-ai-note{font-size:16px;line-height:1.8}
+.app-shell.teen-reader .everyday-ai-heading p{font-size:14px}
+@media(max-width:700px){.everyday-ai-section{padding:42px 5% 50px}.everyday-ai-infographic{border-radius:14px}.everyday-ai-note{font-size:12px;padding:12px 14px}.app-shell.young-reader .everyday-ai-note{font-size:14px}}
